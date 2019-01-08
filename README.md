@@ -4,6 +4,7 @@ Apache / PHP / MySQL / WordPress
 Install Apache / PHP / MySQL / WordPress
 
 wget --no-check-certificate -O - https://raw.githubusercontent.com/aristosv/lampstack/master/lamp | bash
+
 Run the command above on a Debian Stretch machine.
 
 You will be asked to enter a few information and the script will install for you Apache, PHP, MySQL and WordPress.
