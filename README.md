@@ -1,5 +1,4 @@
 # lampstack
-Apache / PHP / MySQL / WordPress
 
 Install Apache / PHP / MySQL / WordPress
 
