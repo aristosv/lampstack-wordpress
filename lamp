@@ -5,6 +5,15 @@ read -p "create a username for wordpress database: " wordpress_database_name
 read -p "create a password for wordpress database: " wordpress_database_pass
 read -p "what is the domain name you will be hosting on this server: " domain_name
 
+echo update
+apt-get update > /dev/null 2>&1
+
+echo upgrade
+apt-get -y upgrade > /dev/null 2>&1
+
+echo dist upgrade
+apt-get -y dist-upgrade > /dev/null 2>&1
+
 echo install apache
 apt-get install -y apache2 > /dev/null 2>&1
 
