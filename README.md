@@ -2,7 +2,7 @@
 
 Install Apache / PHP / MySQL / WordPress
 ```
-wget --no-check-certificate -O - https://raw.githubusercontent.com/aristosv/lampstack/master/lamp | bash
+bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/aristosv/lampstack/master/lamp)
 ```
 Run the command above on a Debian Stretch machine.
 
