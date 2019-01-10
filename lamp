@@ -1,9 +1,10 @@
 echo set variables
-read -p "set a root password for mariadb: " database_root_pass
-read -p "create a database for wordpress: " wordpress_database_name
-read -p "create a username for wordpress database: " wordpress_database_name
-read -p "create a password for wordpress database: " wordpress_database_pass
-read -p "what is the domain name you will be hosting on this server: " domain_name
+
+echo set a root password for mariadb: ; read database_root_pass
+echo create a database for wordpress: ; read wordpress_database_name
+echo create a username for wordpress database: ; read wordpress_database_user
+echo create a password for wordpress database: ; read wordpress_database_pass
+echo what is the domain name you will be hosting on this server: ; read domain_name
 
 echo update
 apt-get update > /dev/null 2>&1
