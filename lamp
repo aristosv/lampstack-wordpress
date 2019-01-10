@@ -135,7 +135,7 @@ case $input in
  ;;
 esac
 
-read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)?" input
+read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)? " input
 case $input in
     [yY][eE][sS]|[yY])
  echo installing certbot
