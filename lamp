@@ -7,64 +7,64 @@ echo what is the domain name you will be hosting on this server: ; read domain_n
 
 echo please wait...
 
-echo update
+echo updating
 apt-get update > /dev/null 2>&1
 
-echo upgrade
+echo upgrading
 apt-get -y upgrade > /dev/null 2>&1
 
-echo dist upgrade
+echo dist upgrading
 apt-get -y dist-upgrade > /dev/null 2>&1
 
-echo install apache
+echo installing apache
 apt-get install -y apache2 > /dev/null 2>&1
 
-echo install mariadb
+echo installing mariadb
 apt-get install -y mariadb-server > /dev/null 2>&1
 
-echo install php
+echo installing php
 apt-get install -y php php-mysql libapache2-mod-php php-curl > /dev/null 2>&1
 
-echo install unzip
+echo installing unzip
 apt-get install -y unzip > /dev/null 2>&1
 
-echo secure mariadb
+echo securing mariadb
 echo set mariadb root password
 mysql --user="root" --password="" --execute="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$database_root_pass');"
 
-echo remove anonymous users
+echo removing anonymous users
 mysql --user="root" --password="" --execute="DELETE FROM mysql.user WHERE User='';"
 
-echo disable remote root logins
+echo disabling remote root logins
 mysql --user="root" --password="" --execute="DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
 
-echo remove test database
+echo removing test database
 mysql --user="root" --password="" --execute="DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
 
-echo flush privileges
+echo flushing privileges
 mysql --user="root" --password="" --execute="FLUSH PRIVILEGES;"
 
-echo create database
+echo creating database
 mysql --user="root" --password="$database_root_pass" --execute="CREATE DATABASE $wordpress_database_name;"
 mysql --user="root" --password="$database_root_pass" --execute="CREATE USER '$wordpress_database_user'@'localhost' IDENTIFIED BY '$wordpress_database_pass';"
 mysql --user="root" --password="$database_root_pass" --execute="GRANT ALL ON $wordpress_database_name.* TO '$wordpress_database_user'@'localhost' IDENTIFIED BY '$wordpress_database_pass' WITH GRANT OPTION;"
 mysql --user="root" --password="$database_root_pass" --execute="FLUSH PRIVILEGES;"
 
-echo create website folder
+echo creating website folder
 mkdir /var/www/html/$domain_name/
 
-echo download cms
+echo downloading wordpress
 wget --no-check-certificate https://wordpress.org/latest.zip > /dev/null 2>&1
 
-echo extract cms
+echo extracting wordpress
 unzip latest.zip -d /tmp > /dev/null 2>&1
 mv /tmp/wordpress/* /var/www/html/$domain_name/
 
-echo set permissions
+echo setting permissions
 chown -R www-data:www-data /var/www/html/$domain_name
 chmod -R 755 /var/www/html/$domain_name
 
-echo add virtual host
+echo adding virtual host
 echo "<VirtualHost *:80>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
 echo " DocumentRoot /var/www/html/$domain_name" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
 echo " ServerName $domain_name" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
@@ -80,26 +80,26 @@ echo " ErrorLog \${APACHE_LOG_DIR}/$domain_name-error.log" | tee -a /etc/apache2
 echo " CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
 echo "</VirtualHost>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
 
-echo disable default host
+echo disabling default host
 a2dissite 000-default.conf > /dev/null 2>&1
 
-echo enable $domain_name
+echo enabling $domain_name
 a2ensite $domain_name.conf > /dev/null 2>&1
 
-echo enable mod-rewrite
+echo enabling mod-rewrite
 a2enmod rewrite > /dev/null 2>&1
 
-echo restart apache
+echo restarting apache
 systemctl restart apache2.service
 
 read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)?" input
 case $input in
     [yY][eE][sS]|[yY])
- echo install certbot
+ echo installing certbot
  echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
  apt-get update > /dev/null 2>&1
- apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
- echo run certification wizard
+ apt-get installing -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
+ echo running certification wizard
  certbot --apache -d $domain_name
  ;;
     [nN][oO]|[nN])
