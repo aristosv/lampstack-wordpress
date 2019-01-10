@@ -112,4 +112,19 @@ if [ "$option" = "y" ]; then
  certbot --apache -d $domain_name
 fi
 
+read -p "do you want to create a letsencrypt certificate for $domain_name (y/n)" answer
+case ${answer:0:1} in
+    y|Y )
+ echo install certbot
+ echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+ apt-get update > /dev/null 2>&1
+ apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
+ echo run certification wizard
+ certbot --apache -d $domain_name
+    ;;
+    * )
+ you chose not to install a certificate
+    ;;
+esac
+
 echo visit $domain_name to start the wordpress installation wizard
