@@ -101,7 +101,7 @@ case $input in
  certbot --apache -d $domain_name
  ;;
     [nN][oO]|[nN])
- you chose not to installa a certificate
+ you chose not to install a certificate
        ;;
     *)
  echo "Invalid input..."
