@@ -144,10 +144,15 @@ case $input in
  echo ===============================================================================
  read -p "go ahead and open these ports if they are not open, when you finish press enter"
  
- echo installing certbot
+ echo configuring repositories
  echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+ 
+ echo updating sources
  apt-get update > /dev/null 2>&1
- apt-get installing -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
+ 
+ echo installing certbot
+ apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
+ 
  echo running certification wizard
  certbot --apache -d $domain_name
  ;;
