@@ -2,7 +2,7 @@ echo set variables
 echo set a root password for mariadb: ; read database_root_pass
 echo create a database for wordpress: ; read wordpress_database_name
 echo create a username for wordpress database: ; read wordpress_database_user
-echo create a password for wordpress database: ; read wordpress_database_pass
+echo set a password for wordpress database: ; read wordpress_database_pass
 echo what is the domain name you will be hosting on this server: ; read domain_name
 
 echo please wait...
