@@ -5,6 +5,8 @@ echo create a username for wordpress database: ; read wordpress_database_user
 echo create a password for wordpress database: ; read wordpress_database_pass
 echo what is the domain name you will be hosting on this server: ; read domain_name
 
+echo please wait...
+
 echo update
 apt-get update > /dev/null 2>&1
 
