@@ -109,13 +109,13 @@ case $input in
 
  echo configuring ssmtp
  rm /etc/ssmtp/ssmtp.conf
- echo "FromLineOverride=YES" | tee -a /etc/ssmtp/ssmtp.conf
- echo "root=srvrsmonitor" | tee -a /etc/ssmtp/ssmtp.conf
- echo "hostname=localhost" | tee -a /etc/ssmtp/ssmtp.conf
- echo "AuthUser=$gmail_email_address" | tee -a /etc/ssmtp/ssmtp.conf
- echo "AuthPass=$gmail_pass" | tee -a /etc/ssmtp/ssmtp.conf
- echo "mailhub=smtp.gmail.com:587" | tee -a /etc/ssmtp/ssmtp.conf
- echo "UseSTARTTLS=YES" | tee -a /etc/ssmtp/ssmtp.conf
+ echo "FromLineOverride=YES" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+ echo "root=srvrsmonitor" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+ echo "hostname=localhost" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+ echo "AuthUser=$gmail_email_address" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+ echo "AuthPass=$gmail_pass" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+ echo "mailhub=smtp.gmail.com:587" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+ echo "UseSTARTTLS=YES" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
 
  echo sending test email to $gmail_email_address
  { echo Subject: here is the subject; echo here is the body; } | /usr/sbin/ssmtp $gmail_email_address
