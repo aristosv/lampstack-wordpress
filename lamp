@@ -92,6 +92,51 @@ a2enmod rewrite > /dev/null 2>&1
 echo restarting apache
 systemctl restart apache2.service
 
+read -r -p "do you want to configure php mail to use a gmail account? (y/n)? " input
+case $input in
+    [yY][eE][sS]|[yY])
+ echo ===============================================================================
+ echo step 1: allow access to your gmail account - https://g.co/allowaccess
+ echo step 2: allow less secure apps - https://myaccount.google.com/lesssecureapps
+ echo ===============================================================================
+ read -p "go ahead and perform the 2 steps above, after you finish press enter"
+
+ echo enter the email address of the gmail account you want to use: ; read gmail_email_address
+ echo enter the password of the gmail account you want to use: ; read gmail_pass
+
+ echo install ssmtp
+ apt-get install -y ssmtp > /dev/null 2>&1
+
+ echo configure ssmtp
+ rm /etc/ssmtp/ssmtp.conf
+ cat >/etc/ssmtp/ssmtp.conf <<EOL
+ FromLineOverride=YES
+ root=srvrsmonitor
+ hostname=localhost
+ AuthUser=$gmail_email_address
+ AuthPass=$gmail_pass
+ mailhub=smtp.gmail.com:587
+ UseSTARTTLS=YES
+ EOL
+
+echo sending test email to $gmail_email_address
+{ echo Subject: here is the subject; echo here is the body; } | /usr/sbin/ssmtp $gmail_email_address
+
+echo configure php
+sed -i -e "s|;sendmail_path =|sendmail_path = /usr/sbin/ssmtp -t|g" /etc/php/7.0/cli/php.ini
+
+echo restart apache
+systemctl restart apache2  > /dev/null 2>&1
+ ;;
+    [nN][oO]|[nN])
+ echo you chose not to configure php mail
+       ;;
+    *)
+ echo "Invalid input..."
+ exit 1
+ ;;
+esac
+
 read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)?" input
 case $input in
     [yY][eE][sS]|[yY])
@@ -103,7 +148,7 @@ case $input in
  certbot --apache -d $domain_name
  ;;
     [nN][oO]|[nN])
- echo you chose not to install a certificate
+ echo you chose not to install a letsencrypt certificate
        ;;
     *)
  echo "Invalid input..."
