@@ -99,7 +99,7 @@ case $input in
  echo step 1: allow access to your gmail account - https://g.co/allowaccess
  echo step 2: allow less secure apps - https://myaccount.google.com/lesssecureapps
  echo ===============================================================================
- read -p "go ahead and perform the 2 steps above, after you finish press enter"
+ read -p "go ahead and perform the 2 steps above, when you finish press enter"
 
  echo enter the email address of the gmail account you want to use: ; read gmail_email_address
  echo enter the password of the gmail account you want to use: ; read gmail_pass
