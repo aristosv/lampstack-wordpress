@@ -90,41 +90,23 @@ a2enmod rewrite > /dev/null 2>&1
 echo restart apache
 systemctl restart apache2.service
 
-read -p "do you want to create a letsencrypt certificate for $domain_name ? " -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
- echo install certbot
- echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
- apt-get update > /dev/null 2>&1
- apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
- 
- echo run certification wizard
- certbot --apache -d $domain_name
-fi
-
-read -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)?" option
-if [ "$option" = "y" ]; then
+read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)?" input
+case $input in
+    [yY][eE][sS]|[yY])
  echo install certbot
  echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
  apt-get update > /dev/null 2>&1
  apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
  echo run certification wizard
  certbot --apache -d $domain_name
-fi
-
-read -p "do you want to create a letsencrypt certificate for $domain_name (y/n)" answer
-case ${answer:0:1} in
-    y|Y )
- echo install certbot
- echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
- apt-get update > /dev/null 2>&1
- apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
- echo run certification wizard
- certbot --apache -d $domain_name
-    ;;
-    * )
- you chose not to install a certificate
-    ;;
+ ;;
+    [nN][oO]|[nN])
+ you chose not to installa a certificate
+       ;;
+    *)
+ echo "Invalid input..."
+ exit 1
+ ;;
 esac
 
 echo visit $domain_name to start the wordpress installation wizard
