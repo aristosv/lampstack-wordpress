@@ -104,10 +104,10 @@ case $input in
  echo enter the email address of the gmail account you want to use: ; read gmail_email_address
  echo enter the password of the gmail account you want to use: ; read gmail_pass
 
- echo install ssmtp
+ echo installing ssmtp
  apt-get install -y ssmtp > /dev/null 2>&1
 
- echo configure ssmtp
+ echo configuring ssmtp
  rm /etc/ssmtp/ssmtp.conf
  cat >/etc/ssmtp/ssmtp.conf <<EOL
  FromLineOverride=YES
@@ -122,10 +122,10 @@ case $input in
 echo sending test email to $gmail_email_address
 { echo Subject: here is the subject; echo here is the body; } | /usr/sbin/ssmtp $gmail_email_address
 
-echo configure php
+echo configuring php
 sed -i -e "s|;sendmail_path =|sendmail_path = /usr/sbin/ssmtp -t|g" /etc/php/7.0/cli/php.ini
 
-echo restart apache
+echo restarting apache
 systemctl restart apache2  > /dev/null 2>&1
  ;;
     [nN][oO]|[nN])
