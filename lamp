@@ -102,4 +102,14 @@ then
  certbot --apache -d $domain_name
 fi
 
-echo you should now be able to start the wordpress installation wizard by visiting $domain_name
+read -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)?" option
+if [ "$option" = "y" ]; then
+ echo install certbot
+ echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+ apt-get update > /dev/null 2>&1
+ apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
+ echo run certification wizard
+ certbot --apache -d $domain_name
+fi
+
+echo visit $domain_name to start the wordpress installation wizard
