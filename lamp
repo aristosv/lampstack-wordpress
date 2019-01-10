@@ -1,4 +1,8 @@
-echo set variables
+echo ===============================================================================
+echo this script will install apache, php, mariadb and wordpress
+echo you will be asked a few questions in order to automate the installation process
+echo ===============================================================================
+ 
 echo set a root password for mariadb: ; read database_root_pass
 echo create a database for wordpress: ; read wordpress_database_name
 echo create a username for wordpress database: ; read wordpress_database_user
