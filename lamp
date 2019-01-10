@@ -138,6 +138,12 @@ esac
 read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)? " input
 case $input in
     [yY][eE][sS]|[yY])
+    
+ echo ===============================================================================
+ echo you must have port 80 and port 443 open for http and https to work
+ echo ===============================================================================
+ read -p "go ahead and open these ports if they are not open, when you finish press enter"
+ 
  echo installing certbot
  echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
  apt-get update > /dev/null 2>&1
