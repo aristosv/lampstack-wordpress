@@ -69,23 +69,8 @@ chown -R www-data:www-data /var/www/html/$domain_name
 chmod -R 755 /var/www/html/$domain_name
 
 echo adding virtual host
-echo "<VirtualHost *:80>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo " DocumentRoot /var/www/html/$domain_name" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo " ServerName $domain_name" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "  <Directory /var/www/html/$domain_name/>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "   Options Indexes FollowSymLinks MultiViews" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "   AllowOverride All" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "   Order allow,deny" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "   allow from all" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "  </Directory>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo " ErrorLog \${APACHE_LOG_DIR}/$domain_name-error.log" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo " CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-echo "</VirtualHost>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
-
 # test code start
-cat > /etc/apache2/sites-available/$domain_name.conf << EOL
+cat > /etc/apache2/sites-available/$domain_name.conf << "EOL"
 <VirtualHost *:80>
   DocumentRoot /var/www/html/$domain_name
   ServerName $domain_name
@@ -97,8 +82,8 @@ cat > /etc/apache2/sites-available/$domain_name.conf << EOL
    allow from all
   </Directory>
   
- ErrorLog ${APACHE_LOG_DIR}/$domain_name-error.log
- CustomLog ${APACHE_LOG_DIR}/$domain_name-access.log combined
+ ErrorLog \${APACHE_LOG_DIR}/$domain_name-error.log
+ CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined
 </VirtualHost>
 EOL
 # test code end
