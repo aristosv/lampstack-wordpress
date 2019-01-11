@@ -1,5 +1,6 @@
 echo ===============================================================================
 echo this script will install apache, php, mariadb and wordpress
+echo optionally it can configure letsencrypt and gmail php mail
 echo you will be asked a few questions in order to automate the installation process
 echo ===============================================================================
 read -p "press enter to continue"
