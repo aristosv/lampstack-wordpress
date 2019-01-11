@@ -5,9 +5,9 @@ echo ===========================================================================
 read -p "press enter to continue"
 
 echo set a root password for mariadb: ; read database_root_pass
-echo create a database for wordpress: ; read wordpress_database_name
-echo create a username for wordpress database: ; read wordpress_database_user
-echo set a password for wordpress database: ; read wordpress_database_pass
+echo enter a name for the wordpress database: ; read wordpress_database_name
+echo enter a username for the wordpress database: ; read wordpress_database_user
+echo enter a password for the wordpress database: ; read wordpress_database_pass
 echo what is the domain name you will be hosting on this server: ; read domain_name
 
 echo please wait...
