@@ -7,7 +7,7 @@ echo | ( ( | | | | | | | |___ | |_( ( | ( (___| |< (
 echo |_|\_||_|_|_|_| ||_/(___/ \___)_||_|\____)_| \_)
 echo               |_|                   
 echo ==============================================================
-echo this script will install apache, php, mariadb and wordpress
+echo this will install apache, php, mariadb and wordpress
 echo optionally it can configure letsencrypt and gmail php mail
 echo you will be asked a few questions to automate the installation
 echo ==============================================================
