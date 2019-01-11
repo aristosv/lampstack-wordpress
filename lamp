@@ -70,7 +70,7 @@ chmod -R 755 /var/www/html/$domain_name
 
 echo adding virtual host
 # test code start
-cat > /etc/apache2/sites-available/$domain_name.conf << "EOL"
+cat > /etc/apache2/sites-available/$domain_name.conf << EOL
 <VirtualHost *:80>
   DocumentRoot /var/www/html/$domain_name
   ServerName $domain_name
@@ -82,8 +82,8 @@ cat > /etc/apache2/sites-available/$domain_name.conf << "EOL"
    allow from all
   </Directory>
   
- ErrorLog \${APACHE_LOG_DIR}/$domain_name-error.log
- CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined
+ ErrorLog ${APACHE_LOG_DIR}/$domain_name-error.log
+ CustomLog ${APACHE_LOG_DIR}/$domain_name-access.log combined
 </VirtualHost>
 EOL
 # test code end
