@@ -76,7 +76,6 @@ chown -R www-data:www-data /var/www/html/$domain_name
 chmod -R 755 /var/www/html/$domain_name
 
 echo adding virtual host
-# test code start
 cat > /etc/apache2/sites-available/$domain_name.conf << EOL
 <VirtualHost *:80>
   DocumentRoot /var/www/html/$domain_name
@@ -93,7 +92,6 @@ cat > /etc/apache2/sites-available/$domain_name.conf << EOL
  CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined
 </VirtualHost>
 EOL
-# test code end
 
 echo disabling default host
 a2dissite 000-default.conf > /dev/null 2>&1
@@ -109,75 +107,78 @@ systemctl restart apache2.service
 
 read -r -p "do you want to configure php mail to use a gmail account? (y/n)? " input
 case $input in
-    [yY][eE][sS]|[yY])
- echo ===============================================================================
- echo step 1: allow access to your gmail account - https://g.co/allowaccess
- echo step 2: allow less secure apps - https://myaccount.google.com/lesssecureapps
- echo ===============================================================================
- read -p "go ahead and perform the 2 steps above, when you finish press enter"
+   [yY][eE][sS]|[yY])
+echo ===============================================================================
+echo step 1: allow access to your gmail account - https://g.co/allowaccess
+echo step 2: allow less secure apps - https://myaccount.google.com/lesssecureapps
+echo ===============================================================================
+read -p "go ahead and perform the 2 steps above, when you finish press enter"
 
- echo enter the email address of the gmail account you want to use: ; read gmail_email_address
- echo enter the password of the gmail account you want to use: ; read gmail_pass
+echo enter the email address of the gmail account you want to use: ; read gmail_email_address
+echo enter the password of the gmail account you want to use: ; read gmail_pass
 
- echo installing ssmtp
- apt-get install -y ssmtp > /dev/null 2>&1
+echo installing ssmtp
+apt-get install -y ssmtp > /dev/null 2>&1
 
- echo configuring ssmtp
- rm /etc/ssmtp/ssmtp.conf
- echo "FromLineOverride=YES" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
- echo "root=srvrsmonitor" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
- echo "hostname=localhost" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
- echo "AuthUser=$gmail_email_address" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
- echo "AuthPass=$gmail_pass" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
- echo "mailhub=smtp.gmail.com:587" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
- echo "UseSTARTTLS=YES" | tee -a /etc/ssmtp/ssmtp.conf > /dev/null 2>&1
+echo configuring ssmtp
+rm /etc/ssmtp/ssmtp.conf
 
- echo sending test email to $gmail_email_address
- { echo Subject: here is the subject; echo here is the body; } | /usr/sbin/ssmtp $gmail_email_address
+cat > /etc/ssmtp/ssmtp.conf << EOL
+FromLineOverride=YES
+root=srvrsmonitor
+hostname=localhost
+AuthUser=$gmail_email_address
+AuthPass=$gmail_pass
+mailhub=smtp.gmail.com:587
+UseSTARTTLS=YES
+EOL
 
- echo configuring php
- sed -i -e "s|;sendmail_path =|sendmail_path = /usr/sbin/ssmtp -t|g" /etc/php/7.0/cli/php.ini
+echo sending test email to $gmail_email_address
+{ echo Subject: here is the subject; echo here is the body; } | /usr/sbin/ssmtp $gmail_email_address
 
- echo restarting apache
- systemctl restart apache2  > /dev/null 2>&1
- ;;
-    [nN][oO]|[nN])
- echo you chose not to configure php mail
-       ;;
-    *)
- echo "Invalid input..."
- exit 1
- ;;
+echo configuring php
+sed -i -e "s|;sendmail_path =|sendmail_path = /usr/sbin/ssmtp -t|g" /etc/php/7.0/cli/php.ini
+
+echo restarting apache
+systemctl restart apache2  > /dev/null 2>&1
+;;
+   [nN][oO]|[nN])
+echo you chose not to configure php mail
+      ;;
+   *)
+echo "Invalid input..."
+exit 1
+;;
 esac
 
 read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)? " input
 case $input in
-    [yY][eE][sS]|[yY])
-    
- echo ===============================================================================
- echo you must have port 80 and port 443 open for http and https to work
- echo ===============================================================================
- read -p "go ahead and open these ports if they are not open, when you finish press enter"
+   [yY][eE][sS]|[yY])
+
+echo ===============================================================================
+echo you must have port 80 and port 443 open for http and https to work
+echo ===============================================================================
+read -p "go ahead and open these ports if they are not open, when you finish press enter"
  
- echo configuring repositories
- echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+echo configuring repositories
+echo "deb http://ftp.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+
+echo updating sources
+apt-get update > /dev/null 2>&1
  
- echo updating sources
- apt-get update > /dev/null 2>&1
+echo installing certbot
+apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
  
- echo installing certbot
- apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
- 
- echo running certification wizard
- certbot --apache -d $domain_name
- ;;
-    [nN][oO]|[nN])
- echo you chose not to install a letsencrypt certificate
-       ;;
-    *)
- echo "Invalid input..."
- exit 1
- ;;
+echo running certification wizard
+certbot --apache -d $domain_name
+;;
+   [nN][oO]|[nN])
+echo you chose not to install a letsencrypt certificate
+      ;;
+   *)
+echo "Invalid input..."
+exit 1
+;;
 esac
 
 echo visit $domain_name to start the wordpress installation wizard
