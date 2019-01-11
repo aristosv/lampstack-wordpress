@@ -84,6 +84,23 @@ echo " ErrorLog \${APACHE_LOG_DIR}/$domain_name-error.log" | tee -a /etc/apache2
 echo " CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
 echo "</VirtualHost>" | tee -a /etc/apache2/sites-available/$domain_name.conf > /dev/null 2>&1
 
+# test code start
+cat > /etc/apache2/sites-available/$domain_name.conf << EOL
+<VirtualHost *:80>
+  DocumentRoot /var/www/html/$domain_name
+  ServerName $domain_name
+  <Directory /var/www/html/$domain_name/>
+   Options Indexes FollowSymLinks MultiViews
+   AllowOverride All
+   Order allow,deny
+   allow from all
+  </Directory>
+ ErrorLog ${APACHE_LOG_DIR}/$domain_name-error.log
+ CustomLog ${APACHE_LOG_DIR}/$domain_name-access.log combined
+</VirtualHost>
+EOL
+# test code end
+
 echo disabling default host
 a2dissite 000-default.conf > /dev/null 2>&1
 
