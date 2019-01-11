@@ -33,7 +33,7 @@ echo installing unzip
 apt-get install -y unzip > /dev/null 2>&1
 
 echo securing mariadb
-echo set mariadb root password
+echo setting mariadb root password
 mysql --user="root" --password="" --execute="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$database_root_pass');"
 
 echo removing anonymous users
