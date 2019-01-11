@@ -82,8 +82,8 @@ cat > /etc/apache2/sites-available/$domain_name.conf << EOL
    allow from all
   </Directory>
   
- ErrorLog ${APACHE_LOG_DIR}/$domain_name-error.log
- CustomLog ${APACHE_LOG_DIR}/$domain_name-access.log combined
+ ErrorLog \${APACHE_LOG_DIR}/$domain_name-error.log
+ CustomLog \${APACHE_LOG_DIR}/$domain_name-access.log combined
 </VirtualHost>
 EOL
 # test code end
