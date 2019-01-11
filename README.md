@@ -4,10 +4,12 @@ Install Apache / PHP / MySQL / WordPress / LetsEncrypt
 ```
 bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/aristosv/lampstack/master/lamp)
 ```
-Run the command above on a Debian Stretch machine.
+Run the command above on a clean, minimal installation of Debian Stretch.
 
-You will be asked to enter a few information and the script will install for you Apache, PHP, MySQL and WordPress.
+You will be asked to enter some information and the script will install Apache, PHP, MySQL and WordPress.
 
-You will also get a prompt if you want to secure your website with a Let's Encrypt certificate and the option to use a gmail account for php mail functionality.
+You will also be given 2 more options:
+- use a gmail account for php mail functionality
+- secure your website with a Let's Encrypt certificate
 
-As soon as the script is done you can visit your domain and initiate the WordPress wizard.
+As soon as the script is done you can visit your domain URL and start the WordPress wizard.
