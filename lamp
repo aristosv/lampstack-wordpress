@@ -89,12 +89,14 @@ cat > /etc/apache2/sites-available/$domain_name.conf << EOL
 <VirtualHost *:80>
   DocumentRoot /var/www/html/$domain_name
   ServerName $domain_name
+  
   <Directory /var/www/html/$domain_name/>
    Options Indexes FollowSymLinks MultiViews
    AllowOverride All
    Order allow,deny
    allow from all
   </Directory>
+  
  ErrorLog ${APACHE_LOG_DIR}/$domain_name-error.log
  CustomLog ${APACHE_LOG_DIR}/$domain_name-access.log combined
 </VirtualHost>
