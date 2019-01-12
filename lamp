@@ -98,8 +98,6 @@ a2enmod rewrite > /dev/null 2>&1
 echo restarting apache
 systemctl restart apache2.service
 
-# email config start
-# ====================================================================================================
 read -p "do you want to configure php mail to use a gmail account? (y/n) " -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
@@ -136,15 +134,13 @@ sed -i -e "s|;sendmail_path =|sendmail_path = /usr/sbin/ssmtp -t|g" /etc/php/7.0
 echo restarting apache
 systemctl restart apache2  > /dev/null 2>&1
 fi
-# ====================================================================================================
 
-read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)? " input
-case $input in
-   [yY][eE][sS]|[yY])
-
-echo ===============================================================================
+read -p "do you want to create a letsencrypt certificate for $domain_name? (y/n) " -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+echo ------------------------------------------------------------------
 echo you must have port 80 and port 443 open for http and https to work
-echo ===============================================================================
+echo ------------------------------------------------------------------
 read -p "go ahead and open these ports if they are not open, when you finish press enter"
  
 echo configuring repositories
@@ -158,14 +154,6 @@ apt-get install -y python-certbot-apache -t stretch-backports > /dev/null 2>&1
  
 echo running certification wizard
 certbot --apache -d $domain_name
-;;
-   [nN][oO]|[nN])
-echo you chose not to install a letsencrypt certificate
-      ;;
-   *)
-echo "Invalid input..."
-exit 1
-;;
-esac
+fi
 
 echo visit $domain_name to start the wordpress installation wizard
