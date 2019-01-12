@@ -99,7 +99,7 @@ echo restarting apache
 systemctl restart apache2.service
 
 read -p "do you want to configure php mail to use a gmail account? (y/n) " -r
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $reply =~ ^[Yy]$ ]]
 then
 echo ----------------------------------------------------------------------------
 echo step 1: allow access to your gmail account - https://g.co/allowaccess
@@ -136,7 +136,7 @@ systemctl restart apache2  > /dev/null 2>&1
 fi
 
 read -p "do you want to create a letsencrypt certificate for $domain_name? (y/n) " -r
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $reply =~ ^[Yy]$ ]]
 then
 echo ------------------------------------------------------------------
 echo you must have port 80 and port 443 open for http and https to work
