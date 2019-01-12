@@ -1,4 +1,4 @@
-# lampstack
+# lampstack-wordpress
 
 Install Apache / PHP / MySQL / WordPress / LetsEncrypt
 ```
