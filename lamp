@@ -98,13 +98,15 @@ a2enmod rewrite > /dev/null 2>&1
 echo restarting apache
 systemctl restart apache2.service
 
-read -r -p "do you want to configure php mail to use a gmail account? (y/n)? " input
-case $input in
-   [yY][eE][sS]|[yY])
-echo ===============================================================================
+# email config start
+# ====================================================================================================
+read -p "do you want to configure php mail to use a gmail account? (y/n) " -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+echo ----------------------------------------------------------------------------
 echo step 1: allow access to your gmail account - https://g.co/allowaccess
 echo step 2: allow less secure apps - https://myaccount.google.com/lesssecureapps
-echo ===============================================================================
+echo ----------------------------------------------------------------------------
 read -p "go ahead and perform the 2 steps above, when you finish press enter"
 
 echo enter the email address of the gmail account you want to use: ; read gmail_email_address
@@ -115,7 +117,6 @@ apt-get install -y ssmtp > /dev/null 2>&1
 
 echo configuring ssmtp
 rm /etc/ssmtp/ssmtp.conf
-
 cat > /etc/ssmtp/ssmtp.conf << EOL
 FromLineOverride=YES
 root=srvrsmonitor
@@ -134,15 +135,8 @@ sed -i -e "s|;sendmail_path =|sendmail_path = /usr/sbin/ssmtp -t|g" /etc/php/7.0
 
 echo restarting apache
 systemctl restart apache2  > /dev/null 2>&1
-;;
-   [nN][oO]|[nN])
-echo you chose not to configure php mail
-      ;;
-   *)
-echo "Invalid input..."
-exit 1
-;;
-esac
+fi
+# ====================================================================================================
 
 read -r -p "do you want to create a letsencrypt certificate for $domain_name? (y/n)? " input
 case $input in
