@@ -98,8 +98,8 @@ a2enmod rewrite > /dev/null 2>&1
 echo restarting apache
 systemctl restart apache2.service
 
-read -p "do you want to configure php mail to use a gmail account? (y/n) " -r
-if [[ $reply =~ ^[Yy]$ ]]
+read -p "do you want to configure php mail to use a gmail account? (y/n) " reply
+if [[ $reply = y ]
 then
 echo ----------------------------------------------------------------------------
 echo step 1: allow access to your gmail account - https://g.co/allowaccess
