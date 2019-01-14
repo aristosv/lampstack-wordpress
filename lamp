@@ -98,7 +98,7 @@ a2enmod rewrite > /dev/null 2>&1
 echo restarting apache
 systemctl restart apache2.service
 
-read -p "do you want to configure php mail to use a gmail account? (y/n) " reply
+read -p "do you want to configure php mail() to use a gmail account? (y/n) " reply
 if [ "$reply" = "y" ]
 then
 echo ----------------------------------------------------------------------------
