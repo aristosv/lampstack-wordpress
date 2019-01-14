@@ -1,6 +1,6 @@
 # lampstack-wordpress
 
-Install Apache / PHP / MySQL / WordPress / LetsEncrypt
+Apache - PHP - MySQL - WordPress
 ```
 bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/aristosv/lampstack-wordpress/master/lamp)
 ```
