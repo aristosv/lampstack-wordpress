@@ -1,11 +1,11 @@
 # lampstack-wordpress
 
 Apache - PHP - MariaDB - WordPress
+
+Run the command below on a clean, minimal installation of Debian Stretch.
 ```
 bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/aristosv/lampstack-wordpress/master/lamp)
 ```
-Run the command above on a clean, minimal installation of Debian Stretch.
-
 You will be asked to enter some information and the script will install Apache, PHP, MariaDB and WordPress.
 
 You will also be given 2 more options:
