@@ -156,4 +156,7 @@ echo running certification wizard
 certbot --apache -d $domain_name
 fi
 
+echo =================================================================================================================
 echo visit $domain_name to start the wordpress installation wizard
+echo use username [$wordpress_database_user] and password [$wordpress_database_pass] during the database configuration
+echo =================================================================================================================
