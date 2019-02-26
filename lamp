@@ -62,6 +62,7 @@ wget --no-check-certificate https://wordpress.org/latest.zip > /dev/null 2>&1
 
 echo extracting wordpress
 unzip latest.zip -d /tmp > /dev/null 2>&1
+rm -f latest.zip
 mv /tmp/wordpress/* /var/www/html/$domain_name/
 
 echo setting permissions
