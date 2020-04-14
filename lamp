@@ -29,7 +29,7 @@ echo installing mariadb
 apt-get install -y mariadb-server > /dev/null 2>&1
 
 echo installing php
-apt-get install -y php php-mysql libapache2-mod-php php-curl > /dev/null 2>&1
+apt-get install -y php php-mysql libapache2-mod-php php-curl php-gd > /dev/null 2>&1
 
 echo installing unzip
 apt-get install -y unzip > /dev/null 2>&1
